@@ -400,6 +400,19 @@ function(z_vcpkg_add_vcpkg_to_cmake_path list suffix)
     endif()
     set("${list}" "${${list}}" PARENT_SCOPE)
 endfunction()
+
+# use either CMAKE_PREFIX_PATH explicitly passed to CMake as a command line argument
+# or CMAKE_PREFIX_PATH from the environment
+if(NOT DEFINED CMAKE_PREFIX_PATH)
+    if(NOT "$ENV{CMAKE_PREFIX_PATH}" STREQUAL "")
+        if(NOT WIN32)
+            string(REPLACE ":" ";" CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH})
+        else()
+            set(CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH})
+        endif()
+    endif()
+endif()
+
 z_vcpkg_add_vcpkg_to_cmake_path(CMAKE_PREFIX_PATH "")
 z_vcpkg_add_vcpkg_to_cmake_path(CMAKE_LIBRARY_PATH "/lib/manual-link")
 z_vcpkg_add_vcpkg_to_cmake_path(CMAKE_FIND_ROOT_PATH "")
