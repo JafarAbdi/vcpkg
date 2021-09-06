@@ -2302,7 +2302,7 @@
     },
     "gflags": {
       "baseline": "2.2.2",
-      "port-version": 2
+      "port-version": 3
     },
     "ghc-filesystem": {
       "baseline": "1.5.4",
